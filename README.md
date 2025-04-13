@@ -7,7 +7,7 @@ A simple SDK for performing basic arithmetic operations.
 You can install the SDK using pip:
 
 ```bash
-pip install calculator-sdk
+pip install calculator_ndozor
 ```
 
 ## Getting Started
@@ -16,7 +16,7 @@ pip install calculator-sdk
 
 1. Import the SDK:
 ```python
-from calculator import ArithmeticOperations
+from calculator_ndozor import ArithmeticOperations
 ```
 
 2. Create an instance with two numbers:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "calculator_ndozor"
-version = "0.0.1"
+version = "0.0.2"
 description = "A simple calculator"
 authors = [
     { name="David Ozokoye", email="davidozokoye@gmail.com" }
