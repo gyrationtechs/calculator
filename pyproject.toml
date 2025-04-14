@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "calculator_ndozor"
-version = "0.0.2"
+dynamic = ["version"]
 description = "A simple calculator"
 authors = [
     { name="David Ozokoye", email="davidozokoye@gmail.com" }
@@ -24,3 +24,6 @@ Issues = "https://github.com/gyrationtechs/calculator/issues"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = {attr = "calculator_ndozor.__version__"}
