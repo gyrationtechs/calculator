@@ -27,7 +27,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          VERSION=$(python -c "exec(open('version.py').read()); print(__version__)")
+          VERSION=$(python -c "exec(open('src/calculator_ndozor/version.py').read()); print(__version__)")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
