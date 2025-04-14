@@ -3,6 +3,9 @@ import re
 
 def get_version():
     try:
+        # First, fetch all tags
+        subprocess.check_output(['git', 'fetch', '--tags'], stderr=subprocess.STDOUT)
+        
         # Get version from git tag
         version = subprocess.check_output(['git', 'describe', '--tags']).decode().strip()
         
@@ -15,7 +18,11 @@ def get_version():
         if match:
             return match.group(1)
         return version
-    except:
-        return '0.0.1'  # Default version if no git tag is available
+    except subprocess.CalledProcessError as e:
+        print(f"Error getting version: {e}")
+        return '0.0.1'  # Default version if git commands fail
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return '0.0.1'  # Default version for any other errors
 
 __version__ = get_version() 
