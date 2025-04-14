@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'  # Triggers on version tags v1.0.0, v1.2.3, etc.
 
 jobs:
   build-and-publish:
@@ -26,20 +24,34 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine wheel setuptools
 
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(python -c "exec(open('version.py').read()); print(__version__)")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag -a v${{ env.VERSION }} -m "Release v${{ env.VERSION }}"
+          git push origin v${{ env.VERSION }}
+
       - name: Build package
         run: python -m build
 
       - name: Publish to PyPI
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
           files: dist/*
           generate_release_notes: true
         env:
