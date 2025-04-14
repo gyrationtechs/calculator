@@ -20,9 +20,9 @@ def get_version():
         return version
     except subprocess.CalledProcessError as e:
         print(f"Error getting version: {e}")
-        return '0.0.1'  # Default version if git commands fail
+        return '0.0.3'  # Default version if git commands fail
     except Exception as e:
         print(f"Unexpected error: {e}")
-        return '0.0.1'  # Default version for any other errors
+        return '0.0.3'  # Default version for any other errors
 
 __version__ = get_version() 
